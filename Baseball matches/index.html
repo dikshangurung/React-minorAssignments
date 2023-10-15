@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <link href="./style.css" rel="stylesheet" />
+
+  <body onload="initialize();">
+    <main>
+      <section class="dateSelection">
+        <aside class="left">
+          <h1>From/ To Date</h1>
+          <div>
+            <span>Year:</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <select id="yearPulldown" onchange="selectionMade(this);"></select>
+          </div>
+          <br />
+          <div>
+            <span>Month:</span>&nbsp;
+            <select id="monthPulldown" onchange="selectionMade(this);"></select>
+          </div>
+          <br />
+          <div>
+            <span>Day:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <select id="dayPulldown" onchange="selectionMade(this);"></select>
+          </div>
+        </aside>
+        <aside class="right">
+          <button class="btn1">Retrive MLB DATA for this Date</button>
+        </aside>
+      </section>
+      <section class="container1">
+        <div class="label">Home Team Name</div>
+        <input
+          type="text"
+          onkeypress="filterText(this);"
+          class="textbox textbox1"
+        />
+        <div></div>
+
+        <div class="label">Away Team Name</div>
+        <input
+          type="text"
+          onkeypress="filterText(this);"
+          class="textbox textbox2"
+        />
+        <div></div>
+
+        <div></div>
+        <button class="next-btn">Next Game for this Date</button>
+        <button class="previous-btn">Previous Game for this Date</button>
+      </section>
+      <section class="container2">
+        <div class="highlightInfo">
+          <div class="label">Highlight Playbacks</div>
+          <input
+            type="text"
+            onkeypress="filterText(this);"
+            class="textbox textbox3"
+          />
+        </div>
+        <div class="highlightVideo">
+          <button class="nexthl-btn">Next Highlight for this Date</button>
+          <button class="previoushl-btn">
+            Previous Highlight for this Date
+          </button>
+
+          <br />
+          <button class="runhl-btn">Run Playback for this Highlight</button>
+        </div>
+      </section>
+    </main>
+  </body>
+  <script src="./script.js"></script>
+</html>
