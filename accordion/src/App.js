@@ -55,3 +55,4 @@ function AccordionItem({ title, text, num, currOpen, setCurrOpen }) {
 		</div>
 	);
 }
+//This session is for learning purpose
