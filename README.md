@@ -1,1 +1,1 @@
-# Some React project
+# Some React projects
