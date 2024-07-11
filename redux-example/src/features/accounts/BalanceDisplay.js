@@ -13,7 +13,7 @@ function BalanceDisplay() {
 		loanPurpose: currentLoanPurpose,
 		balance,
 	} = useSelector((state) => state.account);
-	return <div className="balance">{formatCurrency(123456)}</div>;
+	return <div className="balance">{formatCurrency(balance)}</div>;
 }
 
 export default BalanceDisplay;
