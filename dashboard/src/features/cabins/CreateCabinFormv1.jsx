@@ -15,12 +15,8 @@ import FormRow from "../../ui/FormRow";
 const Label = styled.label`
 	font-weight: 500;
 `;
-function CreateCabinForm({ cabinToEdit = {} }) {
-	const { id: editId, ...editValues } = cabinToEdit;
-	const isEditSession = Boolean(editId);
-	const { register, handleSubmit, reset, getValues, formState } = useForm({
-		defaultValues: isEditSession ? editValues : {},
-	});
+function CreateCabinForm() {
+	const { register, handleSubmit, reset, getValues, formState } = useForm();
 	const { errors } = formState;
 	const queryClient = useQueryClient();
 	const { mutate, isLoading: isCreating } = useMutation({
@@ -123,9 +119,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 					id="image"
 					accept="image/*"
 					{...register("image", {
-						required: isEditSession
-							? false
-							: "This field is required",
+						required: "This field is required",
 					})}
 				/>
 			</FormRow>
@@ -136,7 +130,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 					Cancel
 				</Button>
 				<Button variation="primary" size="medium">
-					{isEditSession ? "Edit Cabin" : "Create New Cabin"}
+					Edit cabin
 				</Button>
 			</FormRow>
 		</Form>
