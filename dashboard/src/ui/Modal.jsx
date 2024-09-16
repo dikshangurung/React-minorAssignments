@@ -9,6 +9,7 @@ import {
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
+import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
 	position: fixed;
@@ -79,17 +80,7 @@ function Open({ children, opens: opensWindowName }) {
 function Window({ children, name }) {
 	const { openName, close } = useContext(ModalContext);
 
-	const ref = useRef();
-	useEffect(
-		function () {
-			function handleClick(e) {
-				if (ref.current && !ref.current.contain(e.target)) close();
-			}
-			document.addEventListener("click", handleClick);
-			return () => document.removeEventListener("click", handleClick);
-		},
-		[close]
-	);
+	const ref = useOutsideClick(close);
 	if (name !== openName) return null; // useEffect return bhanda aagadi call garnu parchacd
 	return createPortal(
 		<Overlay>
