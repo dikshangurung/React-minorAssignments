@@ -54,6 +54,7 @@ exports.createPost = (req, res, next) => {
 		imageUrl: imageUrl,
 		creator: req.userId,
 	});
+
 	post.save()
 		.then((result) => {
 			return User.findById(req.userId);
