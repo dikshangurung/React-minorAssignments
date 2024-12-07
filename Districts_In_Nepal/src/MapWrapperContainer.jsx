@@ -26,13 +26,15 @@ function MapWrapperContainer({
 	targetDistrict,
 	districtColors,
 	setDistrictColors,
+	setAnsweredDistricts, // New prop to update answered districts
+	setFine,
+	fine,
 }) {
-	// const [targetDistrict, setTargetDistrict] = useState(null);
-	// const [districtColors, setDistrictColors] = useState({});
-
 	const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 	const [popupPosition, setPopupPosition] = useState(null);
 	const [popupDistrict, setPopupDistrict] = useState(null);
+	const colors = ["red", "orange", "yellow"];
+
 	// Track mouse position
 	useEffect(() => {
 		const handleMouseMove = (e) => {
@@ -43,6 +45,7 @@ function MapWrapperContainer({
 			window.removeEventListener("mousemove", handleMouseMove);
 		};
 	}, []);
+
 	// Event handlers for district interactions
 	function onEachDistrict(feature, layer) {
 		layer.on({
@@ -60,32 +63,51 @@ function MapWrapperContainer({
 			},
 			click: (e) => {
 				if (!isActive) return;
+				console.log(fine);
+				if (fine >= 2) {
+					console.log("Game Over");
+				}
 				const clickedDistrict = feature.properties.DISTRICT;
 				const latlng = e.latlng;
-				console.log("Clicked" + clickedDistrict);
-				console.log("Target" + targetDistrict);
+				console.log("Clicked: " + clickedDistrict);
+				console.log("Target: " + targetDistrict);
 				if (clickedDistrict === targetDistrict) {
 					console.log("Correct");
 					setDistrictColors((prev) => ({
 						...prev,
-						[clickedDistrict]: "white",
+						[clickedDistrict]: colors[fine],
 					}));
-					getRandomDistrict();
-					// startGame(); // Restart game
+					setAnsweredDistricts((prev) => [...prev, clickedDistrict]); // Mark district as answered
+					getRandomDistrict(); // Get the next random district
 				} else {
 					setPopupDistrict(clickedDistrict);
 					setPopupPosition(latlng);
-
-					// Remove popup after 3 seconds
-					setTimeout(() => {
-						setPopupDistrict(null);
-						setPopupPosition(null);
-					}, 1000);
-
 					setDistrictColors((prev) => ({
 						...prev,
 						[clickedDistrict]: "red",
 					}));
+					setFine((prev) => prev + 1); // Add 1 to the fine
+					// Remove popup after 3 seconds
+					// Inside the click event handler of onEachDistrict
+					setTimeout(() => {
+						setPopupDistrict(null);
+						setPopupPosition(null);
+
+						// Reset the color of the clicked district to its default color
+						setDistrictColors((prev) => {
+							const updatedColors = { ...prev };
+							/*
+							I made a copy of the prev object using the spread operator ({ ...prev }) to avoid directly mutating the previous state in React.
+							React uses immutable state management, which means you should never directly modify the previous state. Instead, you should create a new object or array with the desired changes. This allows React to detect changes and trigger re-renders correctly.
+							*/
+							// Remove the clicked district color or set it to blue (default color)
+							if (updatedColors[clickedDistrict]) {
+								delete updatedColors[clickedDistrict]; // Remove the red color
+							}
+							// updatedColors[clickedDistrict] = "blue"; // Optionally set it back to blue if you want
+							return updatedColors;
+						});
+					}, 1000);
 				}
 			},
 		});
@@ -94,6 +116,7 @@ function MapWrapperContainer({
 	// Set style dynamically based on districtColors
 	const getStyle = (feature) => {
 		const district = feature.properties.DISTRICT;
+		// console.log(districtColors);
 		return {
 			fillColor: districtColors[district] || "blue",
 			weight: 2,
@@ -108,6 +131,7 @@ function MapWrapperContainer({
 		[26.347, 80.058], // Southwest corner (minLat, minLng)
 		[30.422, 88.201], // Northeast corner (maxLat, maxLng)
 	];
+
 	return (
 		<>
 			{isActive && targetDistrict && (
@@ -124,6 +148,7 @@ function MapWrapperContainer({
 				<MapContainer
 					key={isActive}
 					//By default, React keeps the same instance of the component when its props do not change (or only shallow updates occur). The key prop, however, instructs React to treat the component as a completely new one, forcing it to destroy and recreate the component. This is useful for cases where you need to force a complete re-render of a component and its children
+
 					center={[28.3949, 84.124]} // Center on Nepal's latitude and longitude
 					zoom={7}
 					style={{ height: "100%", width: "100%" }}
@@ -132,7 +157,7 @@ function MapWrapperContainer({
 					maxBoundsViscosity={1.0} // Makes sure the map stops when reaching the boundary
 				>
 					<GeoJSON
-						key={targetDistrict}
+						key={`${targetDistrict}-${fine}`} // Combine targetDistrict and fine as the key
 						data={geojsonData}
 						style={getStyle}
 						onEachFeature={onEachDistrict}

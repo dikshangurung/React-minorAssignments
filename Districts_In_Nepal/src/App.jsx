@@ -29,22 +29,37 @@ const App = () => {
 	const [targetDistrict, setTargetDistrict] = useState(null);
 	const [timeLeft, setTimeLeft] = useState(30); // 30-second timer
 	const [districtColors, setDistrictColors] = useState({});
+	const [fine, setFine] = useState(0);
+	const [answeredDistricts, setAnsweredDistricts] = useState([]); // New state to track answered districts
 
 	const intervalRef = useRef(null);
-	//Set random discrict
+
+	// Set random district excluding answered ones
 	function getRandomDistrict() {
-		setTargetDistrict(
-			geojsonData.features[
-				Math.floor(Math.random() * geojsonData.features.length)
-			].properties.DISTRICT
+		const unAnsweredDistricts = geojsonData.features.filter(
+			(feature) =>
+				!answeredDistricts.includes(feature.properties.DISTRICT)
 		);
+		if (unAnsweredDistricts.length > 0) {
+			const randomDistrict =
+				unAnsweredDistricts[
+					Math.floor(Math.random() * unAnsweredDistricts.length)
+				].properties.DISTRICT;
+			setTargetDistrict(randomDistrict);
+		} else {
+			alert("All districts have been answered!");
+			endGame();
+		}
 	}
+
 	// Start the game
 	const startGame = () => {
 		setGameActive(true);
-		setTimeLeft(3000);
+		setTimeLeft(3000); // Reset timer to 30 seconds
 		getRandomDistrict();
 		setDistrictColors({});
+		setAnsweredDistricts([]); // Reset answered districts
+		setFine(0);
 		if (intervalRef.current) clearInterval(intervalRef.current);
 		intervalRef.current = setInterval(() => {
 			setTimeLeft((prev) => {
@@ -85,6 +100,9 @@ const App = () => {
 				districtColors={districtColors}
 				setDistrictColors={setDistrictColors}
 				getRandomDistrict={getRandomDistrict}
+				setAnsweredDistricts={setAnsweredDistricts} // Pass the setter to MapWrapperContainer
+				fine={fine}
+				setFine={setFine}
 			/>
 		</MainContainer>
 	);
