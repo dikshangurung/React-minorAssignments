@@ -28,7 +28,7 @@ const Timer = styled.div`
 const App = () => {
 	const [gameActive, setGameActive] = useState(false);
 	const [targetDistrict, setTargetDistrict] = useState(null);
-	const [timeLeft, setTimeLeft] = useState(30); // 30-second timer
+	const [timeElapsed, setTimeElapsed] = useState(0); // Stopwatch (time elapsed)
 	const [districtColors, setDistrictColors] = useState({});
 	const [fine, setFine] = useState(0);
 	const [answeredDistricts, setAnsweredDistricts] = useState([]); // New state to track answered districts
@@ -56,20 +56,14 @@ const App = () => {
 	// Start the game
 	const startGame = () => {
 		setGameActive(true);
-		setTimeLeft(3000); // Reset timer to 30 seconds
+		setTimeElapsed(0); // Reset stopwatch
 		getRandomDistrict();
 		setDistrictColors({});
 		setAnsweredDistricts([]); // Reset answered districts
 		setFine(0);
 		if (intervalRef.current) clearInterval(intervalRef.current);
 		intervalRef.current = setInterval(() => {
-			setTimeLeft((prev) => {
-				if (prev === 1) {
-					endGame();
-					return 0;
-				}
-				return prev - 1;
-			});
+			setTimeElapsed((prev) => prev + 1); // Increment timeElapsed every second
 		}, 1000);
 	};
 
@@ -91,7 +85,7 @@ const App = () => {
 
 			<Timer>
 				{gameActive
-					? `Time Left: ${timeLeft}s`
+					? `Time Elapsed: ${timeElapsed}s`
 					: "Press Start to Play!"}
 			</Timer>
 			<MapWrapperContainer

@@ -45,6 +45,8 @@ const ColorIndicator = styled.div`
 	height: 20px;
 	border-radius: 50%;
 	background-color: ${(props) => props.color || "gray"};
+	opacity: ${(props) => (props.$active ? 1 : 0.5)};
+	border: ${(props) => (props.$active ? "2px solid black" : "none")};
 `;
 const FloatingText = styled.div`
 	position: absolute;
@@ -91,7 +93,7 @@ function MapWrapperContainer({
 			...prev,
 			[targetDistrict]: "#ff6666",
 		}));
-		setFine((prev) => prev + 1); // Add 1 to the fine
+		// setFine((prev) => prev + 1); // Add 1 to the fine
 		// Remove popup after 3 seconds
 		// Inside the click event handler of onEachDistrict
 		setTimeout(() => {
@@ -136,15 +138,17 @@ function MapWrapperContainer({
 				const latlng = e.latlng;
 				if (fine >= 2) {
 					// endGame(targetDistrict, latlng);
+					// endGame(targetDistrict, latlng);
 					setDistrictColors((prev) => ({
 						...prev,
 						[targetDistrict]: "#990000",
 					}));
 					setAnsweredDistricts((prev) => [...prev, targetDistrict]); // Mark district as answered
 					getRandomDistrict(); // Get the next random district
-					setFine(-1);
+					setFine(0);
 					toast.error("Ooops! Missed it");
-					// return;
+
+					return;
 				}
 
 				//check if clicked district already has the answer
@@ -155,15 +159,21 @@ function MapWrapperContainer({
 				if (clickedDistrict === targetDistrict) {
 					console.log("Correct");
 					toast.success("Correct!");
+					console.log(fine);
 					setDistrictColors((prev) => ({
 						...prev,
 						[clickedDistrict]: colors[fine],
 					}));
 					setScore((prev) => prev + 1);
 					setAnsweredDistricts((prev) => [...prev, clickedDistrict]); // Mark district as answered
+					setPoints((prev) => prev + 3 - fine);
 					getRandomDistrict(); // Get the next random district
+					setFine(0);
+					// return;
 				} else {
+					console.log(fine);
 					endGame(clickedDistrict, latlng);
+					setFine((prev) => prev + 1);
 				}
 			},
 		});
@@ -202,12 +212,14 @@ function MapWrapperContainer({
 			)}
 			<MapWrapper>
 				<TopLeftOverlay>
-					<div>District score: {score}/77</div>
-					<div>Points:</div>
+					<div>District points: {score}/77</div>
+					{/* <div>Score: {points}</div> */}
 				</TopLeftOverlay>
-				<TopRightOverlay>
-					<span>Next Color:</span>
-					<ColorIndicator color={colors[fine] || "gray"} />
+				<TopRightOverlay key={fine}>
+					<ColorIndicator color="green" $active={fine === 0} />
+					{/* // transient props is used to pass the props to the styled component */}
+					<ColorIndicator color="orange" $active={fine === 1} />
+					<ColorIndicator color="yellow" $active={fine === 2} />
 				</TopRightOverlay>
 				<MapContainer
 					key={isActive}
