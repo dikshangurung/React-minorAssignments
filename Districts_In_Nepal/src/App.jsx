@@ -3,6 +3,7 @@ import "leaflet/dist/leaflet.css";
 import geojsonData from "./nepal-district.js"; // Adjust the path to your GeoJSON file
 import styled from "styled-components";
 import MapWrapperContainer from "./MapWrapperContainer.jsx";
+import { Toaster } from "react-hot-toast";
 
 // Styled components
 const MainContainer = styled.main`
@@ -103,6 +104,26 @@ const App = () => {
 				setAnsweredDistricts={setAnsweredDistricts} // Pass the setter to MapWrapperContainer
 				fine={fine}
 				setFine={setFine}
+			/>
+			<Toaster
+				position="center"
+				gutter={12}
+				containerStyle={{ margin: "8px" }}
+				toastOptions={{
+					success: {
+						duration: 2000,
+					},
+					error: {
+						duration: 2000,
+					},
+					style: {
+						fontSize: "16px",
+						maxWidth: "900px",
+						padding: "16px 24px",
+						backgroundColor: "#fff",
+						color: "#374151",
+					},
+				}}
 			/>
 		</MainContainer>
 	);
