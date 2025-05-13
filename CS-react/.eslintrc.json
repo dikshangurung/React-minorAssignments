@@ -1,0 +1,4 @@
+//to config behavior of eslint
+{
+	"extends": "react-app" //they are the react rules that we installed earlier
+}

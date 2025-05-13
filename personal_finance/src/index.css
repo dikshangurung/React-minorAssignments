@@ -1,0 +1,313 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+html {
+	font-family: "Poppins", sans-serif;
+	font-size: 68.5%;
+}
+.highlight {
+	color: #10715d;
+}
+body {
+	width: 100%;
+}
+
+nav {
+	/* background-color: aqua; */
+	display: flex;
+	width: 90%;
+	margin: 0 auto;
+}
+main {
+	transition: all 1s;
+}
+.logo {
+	/* position: absolute; */
+	display: block;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
+	/* margin: 0 auto; */
+}
+nav h1 {
+	font-size: 3rem;
+	/* margin: 0 auto; */
+}
+
+.ldata h2 {
+	font-size: 2.6rem;
+}
+.ldata .current_money {
+	color: #10715d;
+	font-size: 2.2rem;
+	font-weight: 700;
+}
+.rdata h2 {
+	margin-top: -4px;
+	font-size: 2.2rem;
+}
+.rdata .fix {
+	position: absolute;
+	right: 0;
+	width: 13.5rem;
+	height: 13.5rem;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.fix:active,
+.fix:hover {
+	background-color: #1ab394;
+	color: white;
+	/* padding-right: 2rem; */
+}
+/*-----------------------FLex box--------------------*/
+.rdata svg {
+	width: 8rem;
+	height: 8rem;
+
+	padding-top: 2rem;
+}
+.rdata {
+	/* flex-shrink: 1; */
+	position: relative;
+	width: 33.33%;
+	flex-grow: 1;
+	text-align: center;
+	color: #10715d;
+}
+.pdata {
+	flex-grow: 1;
+	width: 33.33%;
+	display: flex;
+	/* background-color: red; */
+	align-items: center;
+	flex-direction: column;
+}
+.ldata {
+	margin-top: 2rem;
+	width: 33.33%;
+	flex-grow: 1;
+	color: #444;
+}
+/*---------------------------------Card Section0--------------------------------*/
+.cards {
+	width: 90%;
+	margin: 2rem auto;
+	display: flex;
+	gap: 6.84rem;
+}
+.card {
+	width: 30%;
+	height: 18rem;
+	/* border: 1px solid black; */
+	box-shadow: 0 2rem 3rem rgba(0, 0, 0, 0.25);
+	border-radius: 1rem;
+}
+.card h1 {
+	font-size: 2.2rem;
+	text-align: center;
+	color: #222;
+}
+.two {
+	background-image: linear-gradient(to top left, #10715d, #5dbdaa);
+}
+.one,
+.three {
+	background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+}
+label {
+	font-size: 1.3rem;
+	font-weight: 700;
+}
+.form_input {
+	/* margin-top: 1rem; */
+	width: 80%;
+	height: 2.4rem;
+	background-color: rgba(255, 255, 255, 0.4);
+	outline: none;
+}
+
+.form-group {
+	margin-top: 1.2rem;
+}
+.form_input:focus {
+	outline: none;
+	background-color: rgba(255, 255, 255, 0.6);
+}
+.card_position {
+	width: 80%;
+	height: 100%;
+	margin: 0 auto;
+}
+.card button {
+	display: block;
+	width: 5rem;
+	height: 2rem;
+	margin: 1rem auto;
+	cursor: pointer;
+	font-size: 2.4rem;
+	padding-bottom: 3rem;
+}
+/*------------------------------------Datas---------------------------------------*/
+.data_container {
+	width: 90%;
+	height: 40rem;
+	/* border: 1px solid black; */
+	margin: 0 auto;
+	display: flex;
+}
+.hide_inner_one .movement_container {
+	width: 65%;
+	/* border: 1px solid black; */
+	overflow: scroll;
+}
+.data {
+	width: 35%;
+	display: flex;
+	flex-direction: column;
+}
+.data .census {
+	text-align: center;
+}
+.loan_box {
+	width: 20rem;
+	height: 17rem;
+	background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+	font-size: 3rem;
+	margin: 2rem auto;
+	text-align: center;
+	position: relative;
+	padding-top: 2rem;
+	border-radius: 1rem;
+	box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
+}
+
+.loan_box .view {
+	position: absolute;
+	font-size: 1.8rem;
+	cursor: pointer;
+	bottom: 1px;
+	right: 1px;
+	font-weight: 900;
+}
+.loan_box .view:active,
+.loan_box .view:hover {
+	background-color: #fff;
+	color: #e52a5a;
+}
+.hide_inner_one .movement_activity {
+	width: 80%;
+	margin: 2rem auto;
+}
+.hide_inner_one .movement {
+	/* width: 80%; */
+	margin-bottom: 3rem;
+	height: 8rem;
+}
+.hide_inner_one .in {
+	background-color: #9fc6be;
+	border: 1px solid #10715d;
+}
+.hide_inner_one .out {
+	background-color: #ff8080;
+	border: 1px solid #e52a5a;
+}
+.hide_inner_one .movement_info {
+	flex-grow: 1;
+}
+.hide_inner_one .movement_position {
+	width: 90%;
+	margin: 1rem auto;
+	display: flex;
+}
+.hide_inner_one .money_movement {
+	text-align: right;
+
+	font-size: 1.8rem;
+	color: #08392f;
+}
+.hide_inner_one .deposit_number {
+	display: block;
+	font-size: 1.2rem;
+	background-color: #10715d;
+	color: #fff;
+	text-align: center;
+	border-radius: 2rem;
+}
+.hide_inner_one .withdraw_number {
+	display: block;
+	font-size: 1.2rem;
+	background-color: #e52a5a;
+	color: #fff;
+	text-align: center;
+	border-radius: 2rem;
+	padding: 0.6rem;
+}
+.census h2 {
+	margin-top: 1rem;
+	font-size: 1.7rem;
+}
+/* Sorting-------------------*/
+.sorting {
+	text-align: center;
+	margin-top: 2rem;
+	flex-grow: 1;
+}
+.sort {
+	font-size: 1.6rem;
+}
+
+/*--------------------------------HIde inner two--------------------------------*/
+.hide_inner_two {
+	width: 80%;
+	margin: 2rem auto;
+}
+.hide_inner_two .movement_activity {
+	width: 80%;
+	margin: 2rem auto;
+}
+.hide_inner_two .movement {
+	margin-bottom: 3rem;
+	height: 8rem;
+}
+.hide_inner_two .out {
+	background-color: #ff8080;
+	border: 1px solid #e52a5a;
+	border-radius: 1.5rem;
+}
+.hide_inner_two .movement_position {
+	width: 90%;
+	margin: 1rem auto;
+	display: flex;
+	position: relative;
+}
+.hide_inner_two .movement_info {
+	flex-grow: 1;
+}
+.hide_inner_two .money_movement {
+	text-align: right;
+	font-size: 1.8rem;
+	color: #08392f;
+}
+.hide_inner_two .check svg {
+	width: 5rem;
+	height: 5rem;
+	padding: 1rem;
+	color: #10715d;
+	background-color: #fff;
+	border-radius: 50%;
+}
+.hide_inner_two .check {
+	position: absolute;
+	right: -7rem;
+	top: 0.5rem;
+	cursor: pointer;
+}
+.hide_inner_two .check:active svg,
+.hide_inner_two .check:hover svg {
+	background-color: #10715d;
+	color: #fff;
+}
